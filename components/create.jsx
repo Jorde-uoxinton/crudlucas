@@ -1,31 +1,43 @@
-import { app, database } from '../service/firebase'
-import { collection, addDoc, getDocs, orderBy, query } from 'firebase/firestore'
-import { useState, useEffect } from 'react'
+import Head from 'next/head'
+import { useState,useEffect} from 'react'
 
-//definir coleção
-const contato = collection(database, 'contato')
+//importar a config do firebase
+import { app, database } from '../services/firebase'
+import { collection,addDoc, getDocs } from 'firebase/firestore';
 
-  //hooks
-  const[nome, SetNome]=useState('')
-  const[email, SetEmail]=useState('')
-  const[telefone, SetTelefone]=useState('')
-  const[mensagem, SetMensagem]=useState('')
+//configurar o Firebase do projeto
+const contato = collection(database,'contato')
 
-  export default function Create() {
-  //create
-  const create = ()=>{
+export default function Create() {
+
+  const [nome, setNome] = useState('')
+  const [email, setEmail] = useState('')
+  const [telefone, setTelefone] = useState('')
+  const [mensagem,setMensagem]=useState('')
+
+  const cadastrar = ()=>{
     addDoc(contato,
-    {
-      nome:nome,
-      telefone:telefone,
-      email:email,
-      mensagem:mensagem
-    }).then(()=>{
-      SetNome('')
-      SetEmail('')
-      SetTelefone('')   
-      SetMensagem('')
-      read()
-    })
+      { nome:nome,
+        email:email,
+        telefone:telefone,
+        mensagem:mensagem
+      }
+      ).then(()=>{
+        setNome('')
+        setEmail('')
+        setTelefone('')
+        setMensagem('')
+      })
   }
+
+  return (
+    <>
+          <h3 className='text-center'>CADASTRAR</h3>
+      <input type="text" name="nome" placeholder='Nome' className='form-control' id="" required onChange={event=>setNome(event.target.value)} value={nome} />
+        <input type="email" name="email" placeholder='Email' className='form-control' id="" required onChange={event=>setEmail(event.target.value)} value={email} />
+        <input type="tel" name="telefone" placeholder='Telefone' className='form-control' id="" required onChange={event=>setTelefone(event.target.value)} value={telefone} />
+        <textarea name="mensagem" className='form-control' placeholder='Mensagem' id="" onChange={event=>setMensagem(event.target.value)} value={mensagem} ></textarea>
+        <input type="submit" value="SALVAR" onClick={cadastrar} className='form-control btn btn-outline-dark' />
+        </>
+  )
 }

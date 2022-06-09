@@ -1,34 +1,27 @@
 import Head from 'next/head'
-import Image from 'next/image'
 
-
-import Read from "../components/read"
-import Cadastrar from "../components/create"
+//importar a config do firebase
+import Read from"../components/read";
+import Create from"../components/create";
 
 
 export default function Home() {
 
   return (
     <>
-    <Head>
-      <title>Crud Simples Com Firestorm</title>
-    </Head>
-    <div className="container">
+      <Head>
+        <title>Crud Simples com Firestore</title>
+      </Head>
+      <main className='container'>
       <div className="row">
         <div className="col-lg">
-          <Cadastrar></Cadastrar>
-        </div>
-        <div className="col-lg">
-          <Read></Read>
-        </div>
+        <Create></Create>
       </div>
-    </div>
-
-    </>
-
-
-
+      <div className="col-lg">
+          <Read></Read>
+      </div>
+      </div>
+    </main>
+        </>
   )
-
-
 }
